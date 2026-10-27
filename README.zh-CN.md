@@ -36,9 +36,9 @@ Catppuccin **没有官方 Xshell 移植**（没有 `catppuccin/xshell` 仓库，
 
 ### 方式 A — 脚本（推荐）
 
+下载本仓库（绿色 **Code** 按钮 → **Download ZIP**，或 clone 你自己的 fork），在解压后的目录里执行：
+
 ```powershell
-git clone https://github.com/<you>/Catppuccin-Xshell.git
-cd Catppuccin-Xshell
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
@@ -120,6 +120,15 @@ white(bold)=a6adc8
 - **编码必须是 UTF-16 LE + BOM，换行 CRLF。** Xshell 8 自带的方案就是这样；存成 UTF-8 会乱码或被拒绝。
   本仓库每个文件正好 676 字节。
 - **没有光标色、选中色、标签栏色。** 这个格式没有对应的键，只能到会话属性里另设。
+
+### 看似异常但正常
+
+- **ANSI 1–6 与对应 bright 完全相同。** Catppuccin 的 `brightRed` 就是 `red` 的同一个 hex，粗体只是粗，不会更亮。
+- **暗色三套里 `brightWhite` 比 `white` 更暗。** bright 槽位遵循调色板的 Overlay/Subtext 顺序，不是「越亮越好」。
+- **Latte 的 `white` 与 `brightBlack` 同色（`#ACB0BE`）**，对 `#EFF1F5` 只有 1.91:1。所以 ANSI white 的文字本来就该发灰；
+  如果某个 TUI 用 white 输出正文，单独改这一个键即可。
+- **低对比度是设计本身。** pastel 强调色相对背景大约 2–3:1（Latte 的 yellow 2.31:1，Mocha 的 bright black 2.46:1）。
+  这些值与上游完全一致，不是转换错误。
 
 ## 自制 flavor
 

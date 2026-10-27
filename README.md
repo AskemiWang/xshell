@@ -37,9 +37,10 @@ do not include it). This repository fills that gap.
 
 ### Option A — script (recommended)
 
+Download this repository (green **Code** button → **Download ZIP**, or clone your own fork), then
+from the extracted folder:
+
 ```powershell
-git clone https://github.com/<you>/Catppuccin-Xshell.git
-cd Catppuccin-Xshell
 powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
@@ -127,6 +128,19 @@ Two details matter if you edit them:
   use; a file saved as UTF-8 shows up garbled or is rejected. Every file here is exactly 676 bytes.
 - **No cursor, selection or tab colours.** The format has no keys for them; Xshell controls those
   separately in the session properties.
+
+### Known behaviour (not bugs)
+
+- **ANSI 1–6 and their bright variants are identical.** Catppuccin maps `brightRed` to the same hex
+  as `red`, so bold red is bold, not brighter.
+- **On the dark flavours `brightWhite` is darker than `white`.** The bright slots follow the
+  palette's Overlay/Subtext ordering rather than "brighter".
+- **Latte's `white` is the same colour as `brightBlack` (`#ACB0BE`)** — 1.91:1 against `#EFF1F5`.
+  ANSI white text is therefore deliberately faint; override that single key if a TUI uses white
+  for body text.
+- **Contrast is low by design.** The pastel accents sit around 2–3:1 on their own background
+  (Latte's yellow is 2.31:1, Mocha's bright black 2.46:1). These are the upstream values, not a
+  conversion mistake.
 
 ## Make your own flavour
 

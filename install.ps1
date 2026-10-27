@@ -55,7 +55,11 @@ function Get-XshellSchemeDirectories {
 
 if ($Destination) {
     if (-not (Test-Path -LiteralPath $Destination)) {
-        New-Item -ItemType Directory -Path $Destination -Force | Out-Null
+        if ($Uninstall) {
+            Write-Host ("Nothing to uninstall: '{0}' does not exist." -f $Destination) -ForegroundColor Yellow
+            exit 0
+        }
+        [System.IO.Directory]::CreateDirectory($Destination) | Out-Null
     }
     $targets = @($Destination)
 }
@@ -63,6 +67,10 @@ else {
     $targets = @(Get-XshellSchemeDirectories)
     if ($targets.Count -eq 0) {
         Write-Host ''
+        if ($Uninstall) {
+            Write-Host 'No Xshell colour-scheme folder found - nothing to uninstall.' -ForegroundColor Yellow
+            exit 0
+        }
         Write-Host 'No Xshell colour-scheme folder found.' -ForegroundColor Yellow
         Write-Host 'Expected something like:'
         Write-Host '  C:\Users\<you>\Documents\NetSarang Computer\8\Xshell\ColorScheme Files'
@@ -76,6 +84,8 @@ else {
 Write-Host ("Catppuccin for Xshell - {0} scheme file(s)" -f $schemes.Count)
 Write-Host ''
 
+$changed = 0
+
 foreach ($target in $targets) {
     Write-Host ("-> {0}" -f $target) -ForegroundColor Cyan
 
@@ -85,6 +95,7 @@ foreach ($target in $targets) {
             if (Test-Path -LiteralPath $file) {
                 Remove-Item -LiteralPath $file -Force
                 Write-Host ("   removed  {0}" -f $scheme.Name)
+                $changed++
             }
         }
     }
@@ -92,16 +103,22 @@ foreach ($target in $targets) {
         foreach ($scheme in $schemes) {
             Copy-Item -LiteralPath $scheme.FullName -Destination (Join-Path $target $scheme.Name) -Force
             Write-Host ("   copied   {0}" -f $scheme.Name)
+            $changed++
         }
     }
     Write-Host ''
 }
 
 if ($Uninstall) {
-    Write-Host 'Done. Restart Xshell to refresh the colour-scheme list.'
+    if ($changed -eq 0) {
+        Write-Host 'Nothing to uninstall - the schemes were not present.' -ForegroundColor Yellow
+    }
+    else {
+        Write-Host ("Done. {0} file(s) removed. Restart Xshell to refresh the colour-scheme list." -f $changed)
+    }
 }
 else {
-    Write-Host 'Done. Now:' -ForegroundColor Green
+    Write-Host ("Done. {0} file(s) installed. Now:" -f $changed) -ForegroundColor Green
     Write-Host '  1. Restart Xshell.'
     Write-Host '  2. Tools -> Color Schemes, pick "Catppuccin Mocha" (or another flavour).'
     Write-Host '  3. For one session only: right-click the session -> Properties -> Appearance.'
