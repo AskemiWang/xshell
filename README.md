@@ -33,11 +33,20 @@ Still in that window — select a scheme, hit OK.
 Only want it for a single session? Right-click the session →
 `Properties → Appearance → Color scheme`.
 
-## 4. Want the bright half too? (optional)
+## 4. Recommended: let the bright colours through
 
-Xshell introduces itself to the server as a plain `xterm`, and in terminfo that means 8 colours. The
-scheme still draws all 16 slots, but programs like `ls`, `git` and `vim` obey terminfo and never ask
-for slots 8–15, so the brighter half just sits unused.
+When Xshell connects, it reports an old name for itself: `xterm`. In the system's records, `xterm`
+has **8 colours**.
+
+But Xshell can show 16, and the schemes here define 16. The catch is that `ls`, `git`, `vim` and
+friends are well-behaved: if the terminal says 8, they pick from the first 8 and never touch the
+brighter half.
+
+| | leave it alone | set it |
+|---|---|---|
+| what programs think they have | 8 colours | 256 colours |
+| our 16 slots | still displayed | still displayed |
+| `vim`, `htop` and other full-screen apps | 8-colour mode, plain highlighting | 256-colour mode, more depth |
 
 Add three lines to `~/.bashrc` **on the server**:
 
@@ -47,10 +56,9 @@ case "$TERM" in
 esac
 ```
 
-Reconnect; `tput colors` should say 256.
+Reconnect, then run `tput colors` — it should print `256`.
 
-Skip it and everything still works — you just keep the bright slots idle. Since slots 9–14 are the
-same hex as 1–6, the real difference is mostly `black`/`brightBlack` and `white`/`brightWhite`.
+Skipping it is not broken. It just means buying a box of 16 crayons and using 8 of them.
 
 ---
 
