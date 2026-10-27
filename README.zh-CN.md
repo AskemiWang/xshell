@@ -21,6 +21,54 @@ Catppuccin **没有官方 Xshell 移植**（没有 `catppuccin/xshell` 仓库，
 [netsarang/Xshell-ColorScheme](https://github.com/netsarang/Xshell-ColorScheme) 的 250+ 套方案里也没有），
 本仓库补上这个空缺。
 
+## 开始之前：TERM 与 256 色
+
+Xshell 8 向服务器自我介绍时用的是普通的 `xterm`，而 terminfo 数据库里 `xterm` 对应的是
+**8 色**。本仓库的方案仍然会画出全部 16 个槽位——下面那个 16 色测试就是证据——但守规矩的程序
+（`ls`、`git`、`vim`、`htop`）会相信 terminfo，永远不去请求 8–15 号槽位，调色板的亮色半区就闲置了。
+
+有两条路可选。
+
+### 方案 A —— 声明 256 色（推荐）
+
+在**服务器**的 `~/.bashrc` 里加上：
+
+```bash
+case "$TERM" in
+  xterm) export TERM=xterm-256color ;;
+esac
+```
+
+重新登录，或 `source ~/.bashrc`，然后确认：
+
+```bash
+echo $TERM      # xterm-256color
+tput colors     # 256
+```
+
+**为什么写在 shell 配置里而不是 Xshell 设置里：** Xshell 的「终端类型」下拉通常只有
+`xterm`、`vt100`、`vt220` 这些传统值，而且不少服务器会在 `/etc/profile` 里重写 `TERM`；
+`~/.bashrc` 在那之后执行，优先级更高，也更可靠。
+
+**为什么要加 `case` 判断：** 在 `tmux` 或 `screen` 里，`TERM` 是 `screen-256color`。
+无条件覆盖会让这些程序误判终端类型；加了判断就只升级「当前正好是 xterm」的情况。
+
+### 方案 B —— 什么都不改
+
+本仓库的一切照常工作：四套方案都按规范渲染（见[兼容性](#兼容性)）。唯一后果是，依赖
+terminfo 的程序会停留在 8 色模式：
+
+| | `TERM=xterm` | `TERM=xterm-256color` |
+|---|---|---|
+| `ls --color` | 只用基础 8 色 | 也会用到亮色槽位 |
+| `git log --graph` | 正常 | 同色，对比略强 |
+| `vim` | `t_Co=8` | `t_Co=256` |
+| 16 色测试（显式 `90`–`97` 转义） | 16 个槽位全显示 | 16 个槽位全显示 |
+
+实际损失不大：Catppuccin 把 9–14 映射成和 1–6 相同的 hex，真正有区别的只有
+`black`/`brightBlack` 和 `white`/`brightWhite`。如果你从来没觉得缺亮色，方案 B 完全够用——
+只是要知道 `tput colors` 显示 `8` 是预期行为，不是装坏了。
+
 ![Catppuccin 四套配色：Latte、Frappé、Macchiato、Mocha](assets/preview.svg)
 
 ## 四套配色
@@ -34,47 +82,38 @@ Catppuccin **没有官方 Xshell 移植**（没有 `catppuccin/xshell` 仓库，
 
 ## 安装
 
-### 方式 A — 脚本（推荐）
+Xshell 可以直接导入配色方案，所以只有一步。
 
-下载本仓库（绿色 **Code** 按钮 → **Download ZIP**，或 clone 你自己的 fork），在解压后的目录里执行：
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1
-```
-
-脚本会自动找到
-`%USERPROFILE%\Documents\NetSarang Computer\<版本>\Xshell\ColorScheme Files`
-（包括被 OneDrive 重定向的「文档」），把四个 `.scs` 复制进去并打印结果。
-
-```powershell
-.\install.ps1 -Destination 'D:\backup\xshell-schemes'   # 装到指定目录
-.\install.ps1 -Uninstall                                # 卸载
-```
-
-Xshell 至少要先启动过一次，否则这个目录还不存在。
-
-### 方式 B — 手动复制
-
-把四个 `Catppuccin *.scs` 复制到：
-
-```
-%USERPROFILE%\Documents\NetSarang Computer\<版本>\Xshell\ColorScheme Files\
-```
-
-Xshell 8 就是 `8`，Xshell 7 就是 `7`。**注意不是程序安装目录**（`Xshell.exe` 所在的地方）——
-用户配色存在「文档」里，升级 Xshell 不会丢。
-
-### 方式 C — 从界面导入
-
-`工具 → 配色方案 → 导入`，选中 `.scs` 文件即可。
+1. 下载本仓库——绿色 **Code** 按钮 → **Download ZIP**，或 `git clone`——解压。
+2. 在 Xshell 里打开 `工具 → 配色方案…`
+3. 点 **导入**，选中 `Catppuccin Mocha.scs`（或其它 flavor）。
+4. 其余 flavor 重复一次——一个文件导入一次。
+5. 方案已出现在列表里，选中并确定即可。
 
 ## 启用
 
-1. 重启 Xshell（配色列表在启动时构建）。
-2. `工具 → 配色方案`，选中 **Catppuccin Mocha**（或其它 flavor），确定。
-3. 只给单个会话用：右键会话 → `属性 → 外观 → 配色方案`。
+- **所有会话：** `工具 → 配色方案`，选中某个 flavor，确定。
+- **只给单个会话：** 右键会话 → `属性 → 外观 → 配色方案`。
 
 列表里显示的名字就是文件名，所以文件保留了 `Catppuccin ` 前缀。
+
+## 验证
+
+把下面这段粘进会话，确认 16 个槽位真的生效：
+
+```bash
+printf 'TERM=%s  colors=%s\n\n' "$TERM" "$(tput colors 2>/dev/null)"
+i=0
+while [ $i -le 15 ]; do
+  if [ $i -lt 8 ]; then fg=$((30+i)); bg=$((40+i)); else fg=$((90+i-8)); bg=$((100+i-8)); fi
+  printf '\033[%sm%-14s\033[0m \033[%sm              \033[0m \033[1;%smBOLD\033[0m\n' "$fg" "ANSI $i" "$bg" "$fg"
+  i=$((i+1))
+done
+```
+
+应该看到 16 行带标签的色块，标签后面是实心背景块；这些块的颜色要和调色板表一致。
+即使 `tput colors` 显示 `8`，亮色行也照样能渲染出来——那个数字描述的是程序「会请求什么」，
+不是终端「能显示什么」。
 
 ## 调色板
 
@@ -121,7 +160,7 @@ white(bold)=a6adc8
   本仓库每个文件正好 676 字节。
 - **没有光标色、选中色、标签栏色。** 这个格式没有对应的键，只能到会话属性里另设。
 
-### 看似异常但正常
+## 看似异常但正常
 
 - **ANSI 1–6 与对应 bright 完全相同。** Catppuccin 的 `brightRed` 就是 `red` 的同一个 hex，粗体只是粗，不会更亮。
 - **暗色三套里 `brightWhite` 比 `white` 更暗。** bright 槽位遵循调色板的 Overlay/Subtext 顺序，不是「越亮越好」。
@@ -130,36 +169,23 @@ white(bold)=a6adc8
 - **低对比度是设计本身。** pastel 强调色相对背景大约 2–3:1（Latte 的 yellow 2.31:1，Mocha 的 bright black 2.46:1）。
   这些值与上游完全一致，不是转换错误。
 
-## 自制 flavor
-
-复制一个文件，改小写十六进制值（不带 `#`），保留 19 个键，再存成 UTF-16：
-
-```powershell
-$path = '.\Catppuccin Mocha.scs'
-$text = Get-Content -LiteralPath $path -Raw
-[System.IO.File]::WriteAllText($path, $text, (New-Object System.Text.UnicodeEncoding($false, $true)))
-```
-
-所有颜色的十六进制值见
-[调色板表](https://github.com/catppuccin/catppuccin#-palette)。放进 `ColorScheme Files` 后重启即出现在列表里。
-
 ## 排错
 
 | 现象 | 处理 |
 | --- | --- |
-| 列表里找不到方案 | 放错目录（放进了程序目录而不是「文档」）、版本号目录不对、或者没重启 Xshell。 |
+| 导入后列表里没有 | 重启 Xshell，再确认导入是否真的完成（`工具 → 配色方案`）。Xshell 把方案存在 `%USERPROFILE%\Documents\NetSarang Computer\<版本>\Xshell\ColorScheme Files`，这个目录在第一次运行 Xshell 时创建。 |
 | 名字乱码 / 方案被拒绝 | 文件存成了 UTF-8，重新存为 UTF-16 LE + BOM。 |
 | 粗体看起来发灰 | 正常现象：粗体走 bright 槽位，Catppuccin 的 bright 与普通色很接近。想更分明就改 `*(bold)` 键。 |
 | TUI 程序颜色发暗、像 256 色 | Xshell 没开真彩色（`Xshell.ini` 里 `TrueColorTerminal=1`，或会话里的对应选项）。 |
 | 某段文字突然多出青色背景 | 同样是没开真彩色：终端把 `48;2;r;g;b` 拆开解析，尾部的 `46` 被当成「青色背景」。处理方式同上。 |
-| `tput colors` 只显示 8 / 亮色好像没生效 | 会话宣告的是 `TERM=xterm`。改成 `TERM=xterm-256color`（会话选项里设，或在 shell 配置里 `export TERM=xterm-256color`），程序才会用到调色板的后半段。如果 Xshell 的「终端类型」下拉里没有这一项，就写进 `~/.bashrc`。 |
+| `tput colors` 只显示 8 / 亮色好像没生效 | 见[开始之前](#开始之前term-与-256-色)。 |
 | 只想改某个会话 | 在那一个会话的属性里选配色方案，不要动全局列表。 |
 
 ## 兼容性
 
 在 Windows 11 + **Xshell 8.0.0099** 上验证。四套方案都从真实的 Xshell 窗口里逐像素采样过：
-16 个槽位全部与文件中的 hex 完全一致，没有色彩管理偏移。`.scs` 是 Xshell 8 自带的格式；部分旧版本和大多数
-社区包用的是 `.xcs`，结构不同（方案名作节标题，另加 `[Names]` 块）。如果你的 Xshell 只认 `.xcs`：
+16 个槽位全部与文件中的 hex 完全一致，没有色彩管理偏移。`.scs` 是 Xshell 8 自带的格式；部分旧版本和
+大多数社区包用的是 `.xcs`，结构不同（方案名作节标题，另加 `[Names]` 块）。如果你的 Xshell 只认 `.xcs`：
 
 ```ini
 [Catppuccin Mocha]

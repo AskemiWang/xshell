@@ -22,6 +22,57 @@ Catppuccin has **no official Xshell port** (there is no `catppuccin/xshell` repo
 250+ schemes in [netsarang/Xshell-ColorScheme](https://github.com/netsarang/Xshell-ColorScheme)
 do not include it). This repository fills that gap.
 
+## Before you start: TERM and 256 colours
+
+Xshell 8 introduces itself to the server as a plain `xterm`, and under `xterm` the terminfo
+database says **8 colours**. The schemes still paint all 16 slots — the 16-colour test below shows
+every one of them — but well-behaved programs (`ls`, `git`, `vim`, `htop`) obey terminfo and simply
+never ask for slots 8–15, so the brighter half of the palette goes unused.
+
+You have two options.
+
+### Option A — declare 256 colours (recommended)
+
+Add this to `~/.bashrc` **on the server**:
+
+```bash
+case "$TERM" in
+  xterm) export TERM=xterm-256color ;;
+esac
+```
+
+Reconnect, or `source ~/.bashrc`, then check:
+
+```bash
+echo $TERM      # xterm-256color
+tput colors     # 256
+```
+
+**Why the shell profile and not Xshell's setting:** Xshell's *Terminal Type* list usually only
+offers legacy values (`xterm`, `vt100`, `vt220`, …), and some servers overwrite `TERM` in
+`/etc/profile`; `~/.bashrc` runs after that and wins.
+
+**Why the `case` guard:** inside `tmux` or `screen`, `TERM` is `screen-256color`. Overwriting it
+unconditionally makes those programs misread the terminal; the guard upgrades only a plain `xterm`.
+
+### Option B — change nothing
+
+Everything here still works: all four flavours render exactly as specified (see
+[Compatibility](#compatibility)). The consequence is only that programs which consult terminfo stay
+in 8-colour mode:
+
+| | `TERM=xterm` | `TERM=xterm-256color` |
+|---|---|---|
+| `ls --color` | the basic 8-colour set | also uses the bright slots |
+| `git log --graph` | fine | same colours, slightly more contrast |
+| `vim` | `t_Co=8` | `t_Co=256` |
+| the 16-slot test (explicit `90`–`97` SGR) | all 16 slots | all 16 slots |
+
+The practical loss is small: Catppuccin maps slots 9–14 to the same hex as 1–6, so only `black` /
+`brightBlack` and `white` / `brightWhite` actually differ. If you have never missed bright colours,
+Option B costs you nothing — just know that `tput colors` reporting `8` is expected, not a broken
+install.
+
 ![Catppuccin palettes for Xshell: Latte, Frappé, Macchiato and Mocha](assets/preview.svg)
 
 ## Flavours
@@ -35,57 +86,43 @@ do not include it). This repository fills that gap.
 
 ## Install
 
-### Option A — script (recommended)
+Xshell imports colour schemes directly, so there is only one step.
 
-Download this repository (green **Code** button → **Download ZIP**, or clone your own fork), then
-from the extracted folder:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File .\install.ps1
-```
-
-The script finds every Xshell data folder under
-`%USERPROFILE%\Documents\NetSarang Computer\<version>\Xshell\ColorScheme Files`
-(including OneDrive-redirected `Documents`), copies the four `.scs` files into each of them, and
-prints what it did.
-
-```powershell
-.\install.ps1 -Destination 'D:\backup\xshell-schemes'   # install somewhere specific
-.\install.ps1 -Uninstall                                # remove the schemes again
-```
-
-Xshell must have been started at least once, otherwise the folder does not exist yet.
-
-### Option B — copy the files by hand
-
-Copy the four `Catppuccin *.scs` files into:
-
-```
-%USERPROFILE%\Documents\NetSarang Computer\<version>\Xshell\ColorScheme Files\
-```
-
-`<version>` is `8` for Xshell 8, `7` for Xshell 7, and so on. If more than one version folder
-exists, copy into the one you actually launch. Note that this is **not** the installation folder
-(`C:\Program Files (x86)\NetSarang\...` or wherever `Xshell.exe` lives) — Xshell keeps user colour
-schemes in Documents, and an upgrade of the program will not touch them there.
-
-### Option C — import from the GUI
-
-`Tools → Color Schemes → Import…` and pick a `.scs` file. Useful if you keep your schemes
-somewhere else.
+1. Download this repository — green **Code** button → **Download ZIP**, or `git clone` — and unpack it.
+2. In Xshell open `Tools → Color Schemes…`
+3. Click **Import**, pick `Catppuccin Mocha.scs` (or another flavour).
+4. Repeat for the remaining flavours — one import per file.
+5. The schemes are now in the list; select one and confirm.
 
 ## Apply
 
-1. Restart Xshell (the scheme list is built at startup).
-2. `Tools → Color Schemes` (*工具 → 配色方案*), select **Catppuccin Mocha** (or another flavour) and confirm.
-3. For a single session only: right-click the session → `Properties → Appearance → Color scheme`.
+- **All sessions:** `Tools → Color Schemes`, select the flavour, confirm.
+- **One session only:** right-click the session → `Properties → Appearance → Color scheme`.
 
-The name shown in the list is the file name, which is why the files keep the `Catppuccin ` prefix.
+The name in the list is the file name, which is why the files keep the `Catppuccin ` prefix.
+
+## Verify
+
+Paste this into the session to confirm the 16 slots are live:
+
+```bash
+printf 'TERM=%s  colors=%s\n\n' "$TERM" "$(tput colors 2>/dev/null)"
+i=0
+while [ $i -le 15 ]; do
+  if [ $i -lt 8 ]; then fg=$((30+i)); bg=$((40+i)); else fg=$((90+i-8)); bg=$((100+i-8)); fi
+  printf '\033[%sm%-14s\033[0m \033[%sm              \033[0m \033[1;%smBOLD\033[0m\n' "$fg" "ANSI $i" "$bg" "$fg"
+  i=$((i+1))
+done
+```
+
+You should get 16 labelled rows, each with a solid block behind the label; those block colours must
+match the palette table. The bright rows still render when `tput colors` reports `8` — that number
+describes what programs *ask for*, not what the terminal *can show*.
 
 ## Palette
 
-Every Xshell scheme defines 16 ANSI slots plus a background and a foreground. Bold uses the
-"bright" variants, exactly like Windows Terminal's `brightBlack` … `brightWhite`.
+Every scheme defines 16 ANSI slots plus a background and a foreground. Bold uses the "bright"
+variants, exactly like Windows Terminal's `brightBlack` … `brightWhite`.
 
 | ANSI | Role | Latte | Frappé | Macchiato | Mocha |
 | --- | --- | --- | --- | --- | --- |
@@ -129,7 +166,7 @@ Two details matter if you edit them:
 - **No cursor, selection or tab colours.** The format has no keys for them; Xshell controls those
   separately in the session properties.
 
-### Known behaviour (not bugs)
+## Known behaviour (not bugs)
 
 - **ANSI 1–6 and their bright variants are identical.** Catppuccin maps `brightRed` to the same hex
   as `red`, so bold red is bold, not brighter.
@@ -142,40 +179,26 @@ Two details matter if you edit them:
   (Latte's yellow is 2.31:1, Mocha's bright black 2.46:1). These are the upstream values, not a
   conversion mistake.
 
-## Make your own flavour
-
-Copy a file, edit the hex values (lower-case, no `#`), keep the 19 keys, and re-save it as UTF-16:
-
-```powershell
-$path = '.\Catppuccin Mocha.scs'
-$text = Get-Content -LiteralPath $path -Raw
-[System.IO.File]::WriteAllText($path, $text, (New-Object System.Text.UnicodeEncoding($false, $true)))
-```
-
-Hex values for every Catppuccin colour live in the
-[palette table](https://github.com/catppuccin/catppuccin#-palette). Anything you add to
-`ColorScheme Files` appears in the list after a restart.
-
 ## Troubleshooting
 
 | Symptom | Fix |
 | --- | --- |
-| Scheme missing from the list | Copied into the wrong folder (the program folder instead of Documents), wrong `<version>`, or Xshell was not restarted. |
+| Imported, but the scheme is not in the list | Restart Xshell, then check that the import actually completed (`Tools → Color Schemes`). Xshell stores schemes under `%USERPROFILE%\Documents\NetSarang Computer\<version>\Xshell\ColorScheme Files`; the folder is created the first time Xshell runs. |
 | Garbled name / scheme rejected | File was saved as UTF-8. Re-save as UTF-16 LE with BOM. |
 | Bold text looks washed out | By design: bold maps to the bright slots, which Catppuccin keeps close to the normal ones. Edit the `*(bold)` keys if you want more separation. |
 | TUI apps look 256-colour | Xshell's true-colour mode is off (`TrueColorTerminal=1` in `Xshell.ini`, or the matching session option). |
 | A run of text suddenly gets a cyan background | True-colour is off and the terminal parses `48;2;r;g;b` piecewise — the trailing `46` is read as "cyan background". Same fix as above. |
-| `tput colors` says 8 / bright colours seem missing | The session advertises `TERM=xterm`. Set `TERM=xterm-256color` (session option, or `export TERM=xterm-256color` in your shell profile) so programs actually use the brighter half of the palette. If Xshell's Terminal Type list has no such entry, put the export in `~/.bashrc`. |
+| `tput colors` says 8 / bright colours seem missing | See [Before you start](#before-you-start-term-and-256-colours). |
 | Only one session should change | Set the scheme in that session's properties instead of the global list. |
 
 ## Compatibility
 
 Tested with **Xshell 8.0.0099** on Windows 11. All four flavours were pixel-sampled from real
 Xshell windows: every one of the 16 slots rendered exactly the hex value in the file, with no
-colour-management shift. The `.scs` format is what Xshell 8 ships; some
-older builds and most community packs use `.xcs` instead, which is a different layout (the scheme
-name is the section header, plus a `[Names]` block). If your Xshell only accepts `.xcs`, rename
-the section and append the names block:
+colour-management shift. The `.scs` format is what Xshell 8 ships; some older builds and most
+community packs use `.xcs` instead, which is a different layout (the scheme name is the section
+header, plus a `[Names]` block). If your Xshell only accepts `.xcs`, rename the section and append
+the names block:
 
 ```ini
 [Catppuccin Mocha]
