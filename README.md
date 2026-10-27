@@ -1,65 +1,72 @@
-# Catppuccin for Xshell
+<h3 align="center">
+	<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/logos/exports/1544x1544_circle.png" width="100" alt="Logo"/><br/>
+	<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="30" width="0px"/>
+	Catppuccin for <a href="https://www.netsarang.com/en/xshell/">Xshell</a>
+	<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="30" width="0px"/>
+</h3>
 
 <p align="center">
-  <b>English</b> · <a href="README.zh-CN.md">简体中文</a>
+	<a href="https://github.com/YOUR_USERNAME/xshell/stargazers"><img src="https://img.shields.io/github/stars/YOUR_USERNAME/xshell?colorA=363a4f&colorB=b7bdf8&style=for-the-badge"></a>
+	<a href="https://github.com/YOUR_USERNAME/xshell/issues"><img src="https://img.shields.io/github/issues/YOUR_USERNAME/xshell?colorA=363a4f&colorB=f5a97f&style=for-the-badge"></a>
+	<a href="https://github.com/YOUR_USERNAME/xshell/contributors"><img src="https://img.shields.io/github/contributors/YOUR_USERNAME/xshell?colorA=363a4f&colorB=a6da95&style=for-the-badge"></a>
 </p>
 
-Catppuccin in four flavours for NetSarang Xshell — Latte, Frappé, Macchiato and Mocha.
+<p align="center">
+	<img src="assets/preview.webp"/>
+</p>
 
-| Latte | Frappé |
-|:--:|:--:|
-| <img src="assets/screenshots/latte.png" width="420"> | <img src="assets/screenshots/frappe.png" width="420"> |
+<p align="center">
+	<sub><a href="README.zh-CN.md">简体中文</a></sub>
+</p>
 
-| Macchiato | Mocha |
-|:--:|:--:|
-| <img src="assets/screenshots/macchiato.png" width="420"> | <img src="assets/screenshots/mocha.png" width="420"> |
+## Previews
 
-## 1. Grab the files
+<details>
+<summary>🌻 Latte</summary>
+<img src="assets/screenshots/latte.webp"/>
+</details>
+<details>
+<summary>🪴 Frappé</summary>
+<img src="assets/screenshots/frappe.webp"/>
+</details>
+<details>
+<summary>🌺 Macchiato</summary>
+<img src="assets/screenshots/macchiato.webp"/>
+</details>
+<details>
+<summary>🌿 Mocha</summary>
+<img src="assets/screenshots/mocha.webp"/>
+</details>
 
-Hit the green **Code** button → **Download ZIP**, or just `git clone` it. Unzip or clone it wherever
-you like.
+## Usage
 
-## 2. Import them
+1. Download the flavour of your choice.
+2. Open Xshell and go to **Tools** → **Color Schemes…**
+3. Click **Import** and pick the downloaded `.scs` file.
+4. Select the scheme in the list and hit **OK**.
 
-Open Xshell, go to `Tools → Color Schemes…`, click **Import** and pick
-`Catppuccin Mocha.scs`.
+## 🙋 FAQ
 
-Want all four? Import the other three the same way, one file at a time.
+- Q: **_"The colours look right, but half of them never show up."_**\
+  A: Xshell calls itself `xterm`, which means 8 colours to the server. The fix is three lines in
+  `~/.bashrc` — see [docs/details.md](docs/details.md).
+- Q: **_"The scheme doesn't appear in the list after importing."_**\
+  A: Restart Xshell. Details and other gotchas are in [docs/details.md](docs/details.md).
 
-## 3. Pick one
+## 💝 Thanks to
 
-Still in that window — select a scheme, hit OK.
+- [Your Name](https://github.com/YOUR_USERNAME)
 
-Only want it for a single session? Right-click the session →
-`Properties → Appearance → Color scheme`.
+&nbsp;
 
-## 4. Recommended: let the bright colours through
+<p align="center">
+	<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/footers/gray0_ctp_on_line.svg?sanitize=true" />
+</p>
 
-When Xshell connects, it reports an old name for itself: `xterm`. In the system's records, `xterm`
-has **8 colours**.
+<p align="center">
+	Copyright &copy; 2026 <a href="https://github.com/YOUR_USERNAME" target="_blank">YOUR_USERNAME</a>
+</p>
 
-But Xshell can show 16, and the schemes here define 16. The catch is that `ls`, `git`, `vim` and
-friends are well-behaved: if the terminal says 8, they pick from the first 8 and never touch the
-brighter half.
-
-| | leave it alone | set it |
-|---|---|---|
-| what programs think they have | 8 colours | 256 colours |
-| our 16 slots | still displayed | still displayed |
-| `vim`, `htop` and other full-screen apps | 8-colour mode, plain highlighting | 256-colour mode, more depth |
-
-Add three lines to `~/.bashrc` **on the server**:
-
-```bash
-case "$TERM" in
-  xterm) export TERM=xterm-256color ;;
-esac
-```
-
-Reconnect, then run `tput colors` — it should print `256`.
-
-Skipping it is not broken. It just means buying a box of 16 crayons and using 8 of them.
-
----
-
-Palette tables, troubleshooting and compatibility notes live in [docs/details.md](docs/details.md).
+<p align="center">
+	<a href="https://github.com/catppuccin/catppuccin/blob/main/LICENSE"><img src="https://img.shields.io/static/v1.svg?style=for-the-badge&label=License&message=MIT&logoColor=d9e0ee&colorA=363a4f&colorB=c9cbff"/></a>
+</p>
