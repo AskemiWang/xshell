@@ -12,10 +12,11 @@
 ---
 
 Four ready-to-use Xshell colour schemes built from the official
-[Catppuccin](https://github.com/catppuccin/catppuccin) palette. The 16 ANSI slots use exactly the
-same values as [Catppuccin for Windows Terminal](https://github.com/catppuccin/windows-terminal)
-and [Catppuccin for VS Code](https://github.com/catppuccin/vscode), so an Xshell session looks the
-same as your editor and your local terminal.
+[Catppuccin](https://github.com/catppuccin/catppuccin) palette. The 16 ANSI slots are taken from
+Catppuccin's terminal mapping — the exact values shipped by
+[Catppuccin for Windows Terminal](https://github.com/catppuccin/windows-terminal) — and it is the
+same palette [Catppuccin for VS Code](https://github.com/catppuccin/vscode) puts in its integrated
+terminal, so an Xshell session looks like your local terminal and your editor.
 
 Catppuccin has **no official Xshell port** (there is no `catppuccin/xshell` repository, and the
 250+ schemes in [netsarang/Xshell-ColorScheme](https://github.com/netsarang/Xshell-ColorScheme)
@@ -169,8 +170,8 @@ name0=Catppuccin Mocha
 ## Credits
 
 - Palette: [Catppuccin Org](https://github.com/catppuccin/catppuccin), MIT.
-- Slot mapping mirrors [catppuccin/windows-terminal](https://github.com/catppuccin/windows-terminal)
-  and [catppuccin/vscode](https://github.com/catppuccin/vscode).
+- Slot mapping follows [catppuccin/windows-terminal](https://github.com/catppuccin/windows-terminal);
+  the palette is shared with [catppuccin/vscode](https://github.com/catppuccin/vscode).
 - This is an unofficial port, not affiliated with Catppuccin or NetSarang.
 
 MIT licensed — see [LICENSE](LICENSE).

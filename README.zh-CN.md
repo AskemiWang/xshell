@@ -12,10 +12,10 @@
 ---
 
 四套开箱即用的 Xshell 配色，取自官方 [Catppuccin](https://github.com/catppuccin/catppuccin) 调色板。
-16 个 ANSI 槽位的取值与
-[Catppuccin for Windows Terminal](https://github.com/catppuccin/windows-terminal) 和
-[Catppuccin for VS Code](https://github.com/catppuccin/vscode) 完全一致，所以 Xshell 里的效果
-和你本地终端、编辑器是同一套颜色。
+16 个 ANSI 槽位用的是 Catppuccin 的终端映射——即
+[Catppuccin for Windows Terminal](https://github.com/catppuccin/windows-terminal) 发布的那些取值——
+也是 [Catppuccin for VS Code](https://github.com/catppuccin/vscode) 集成终端所用的同一套颜色，
+所以 Xshell 里的效果和你本地终端、编辑器一致。
 
 Catppuccin **没有官方 Xshell 移植**（没有 `catppuccin/xshell` 仓库，
 [netsarang/Xshell-ColorScheme](https://github.com/netsarang/Xshell-ColorScheme) 的 250+ 套方案里也没有），
@@ -160,8 +160,8 @@ name0=Catppuccin Mocha
 ## 致谢
 
 - 调色板：[Catppuccin Org](https://github.com/catppuccin/catppuccin)，MIT。
-- 槽位映射参考 [catppuccin/windows-terminal](https://github.com/catppuccin/windows-terminal)
-  与 [catppuccin/vscode](https://github.com/catppuccin/vscode)。
+- 槽位映射参考 [catppuccin/windows-terminal](https://github.com/catppuccin/windows-terminal)；
+  配色与 [catppuccin/vscode](https://github.com/catppuccin/vscode) 同源。
 - 非官方移植，与 Catppuccin、NetSarang 均无隶属关系。
 
 MIT 协议，见 [LICENSE](LICENSE)。
