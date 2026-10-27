@@ -6,7 +6,13 @@
 
 Catppuccin in four flavours for NetSarang Xshell — Latte, Frappé, Macchiato and Mocha.
 
-![The four palettes](assets/preview.svg)
+| Latte | Frappé |
+|:--:|:--:|
+| <img src="assets/screenshots/latte.png" width="420"> | <img src="assets/screenshots/frappe.png" width="420"> |
+
+| Macchiato | Mocha |
+|:--:|:--:|
+| <img src="assets/screenshots/macchiato.png" width="420"> | <img src="assets/screenshots/mocha.png" width="420"> |
 
 ## 1. Grab the files
 

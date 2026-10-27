@@ -6,7 +6,13 @@
 
 给 NetSarang Xshell 用的 Catppuccin 配色，四套：Latte、Frappé、Macchiato、Mocha。
 
-![四套配色](assets/preview.svg)
+| Latte | Frappé |
+|:--:|:--:|
+| <img src="assets/screenshots/latte.png" width="420"> | <img src="assets/screenshots/frappe.png" width="420"> |
+
+| Macchiato | Mocha |
+|:--:|:--:|
+| <img src="assets/screenshots/macchiato.png" width="420"> | <img src="assets/screenshots/mocha.png" width="420"> |
 
 ## 1. 下载
 
