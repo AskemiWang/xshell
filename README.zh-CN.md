@@ -159,9 +159,11 @@ name0=Catppuccin Mocha
 
 ## 致谢
 
-- 调色板：[Catppuccin Org](https://github.com/catppuccin/catppuccin)，MIT。
+- 调色板：[Catppuccin Org](https://github.com/catppuccin/catppuccin)，MIT——所需的版权与许可声明
+  已原文收录在 [LICENSE-Catppuccin](LICENSE-Catppuccin)。
 - 槽位映射参考 [catppuccin/windows-terminal](https://github.com/catppuccin/windows-terminal)；
   配色与 [catppuccin/vscode](https://github.com/catppuccin/vscode) 同源。
-- 非官方移植，与 Catppuccin、NetSarang 均无隶属关系。
+- 非官方移植，与 Catppuccin、NetSarang 均无隶属关系。Catppuccin 的名称与 logo 归 Catppuccin Org 所有，
+  此处仅在「移植对象」的意义上使用名称，未打包其 logo。
 
 MIT 协议，见 [LICENSE](LICENSE)。

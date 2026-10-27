@@ -169,9 +169,12 @@ name0=Catppuccin Mocha
 
 ## Credits
 
-- Palette: [Catppuccin Org](https://github.com/catppuccin/catppuccin), MIT.
+- Palette: [Catppuccin Org](https://github.com/catppuccin/catppuccin), MIT — the required
+  copyright and permission notice is reproduced in [LICENSE-Catppuccin](LICENSE-Catppuccin).
 - Slot mapping follows [catppuccin/windows-terminal](https://github.com/catppuccin/windows-terminal);
   the palette is shared with [catppuccin/vscode](https://github.com/catppuccin/vscode).
-- This is an unofficial port, not affiliated with Catppuccin or NetSarang.
+- This is an unofficial port, not affiliated with Catppuccin or NetSarang. The Catppuccin name and
+  logo belong to the Catppuccin Org; the name is used here only to say what is being ported, and no
+  logo is bundled.
 
 MIT licensed — see [LICENSE](LICENSE).

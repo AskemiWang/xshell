@@ -22,6 +22,7 @@ SOFTWARE.
 
 ---
 
-The Catppuccin colour palettes (Latte, Frappe, Macchiato, Mocha) are the work of
-the Catppuccin Org (https://github.com/catppuccin/catppuccin) and are also
-released under the MIT licence.
+This project redistributes the Catppuccin colour palette (Latte, Frappe,
+Macchiato, Mocha). That palette is the work of Catppuccin
+(https://github.com/catppuccin/catppuccin) and is MIT licensed; the required
+copyright and permission notice is reproduced verbatim in LICENSE-Catppuccin.
