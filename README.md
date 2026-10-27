@@ -164,6 +164,7 @@ Hex values for every Catppuccin colour live in the
 | Garbled name / scheme rejected | File was saved as UTF-8. Re-save as UTF-16 LE with BOM. |
 | Bold text looks washed out | By design: bold maps to the bright slots, which Catppuccin keeps close to the normal ones. Edit the `*(bold)` keys if you want more separation. |
 | TUI apps look 256-colour | Xshell's true-colour mode is off (`TrueColorTerminal=1` in `Xshell.ini`, or the matching session option). |
+| A run of text suddenly gets a cyan background | True-colour is off and the terminal parses `48;2;r;g;b` piecewise — the trailing `46` is read as "cyan background". Same fix as above. |
 | Only one session should change | Set the scheme in that session's properties instead of the global list. |
 
 ## Compatibility
