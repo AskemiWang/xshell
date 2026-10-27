@@ -1,4 +1,4 @@
-<h3 align="center">
+﻿<h3 align="center">
 	<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/logos/exports/1544x1544_circle.png" width="100" alt="Logo"/><br/>
 	<img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/misc/transparent.png" height="30" width="0px"/>
 	Catppuccin for <a href="https://www.netsarang.com/en/xshell/">Xshell</a>
@@ -6,9 +6,9 @@
 </h3>
 
 <p align="center">
-	<a href="https://github.com/YOUR_USERNAME/xshell/stargazers"><img src="https://img.shields.io/github/stars/YOUR_USERNAME/xshell?colorA=363a4f&colorB=b7bdf8&style=for-the-badge"></a>
-	<a href="https://github.com/YOUR_USERNAME/xshell/issues"><img src="https://img.shields.io/github/issues/YOUR_USERNAME/xshell?colorA=363a4f&colorB=f5a97f&style=for-the-badge"></a>
-	<a href="https://github.com/YOUR_USERNAME/xshell/contributors"><img src="https://img.shields.io/github/contributors/YOUR_USERNAME/xshell?colorA=363a4f&colorB=a6da95&style=for-the-badge"></a>
+	<a href="https://github.com/AskemiWang/xshell/stargazers"><img src="https://img.shields.io/github/stars/AskemiWang/xshell?colorA=363a4f&colorB=b7bdf8&style=for-the-badge"></a>
+	<a href="https://github.com/AskemiWang/xshell/issues"><img src="https://img.shields.io/github/issues/AskemiWang/xshell?colorA=363a4f&colorB=f5a97f&style=for-the-badge"></a>
+	<a href="https://github.com/AskemiWang/xshell/contributors"><img src="https://img.shields.io/github/contributors/AskemiWang/xshell?colorA=363a4f&colorB=a6da95&style=for-the-badge"></a>
 </p>
 
 <p align="center">
@@ -55,7 +55,7 @@
 
 ## 💝 Thanks to
 
-- [Your Name](https://github.com/YOUR_USERNAME)
+- [AskemiWang](https://github.com/AskemiWang)
 
 &nbsp;
 
@@ -64,7 +64,7 @@
 </p>
 
 <p align="center">
-	Copyright &copy; 2026 <a href="https://github.com/YOUR_USERNAME" target="_blank">YOUR_USERNAME</a>
+	Copyright &copy; 2026 <a href="https://github.com/AskemiWang" target="_blank">AskemiWang</a>
 </p>
 
 <p align="center">
