@@ -1,0 +1,3 @@
+# Normalise text files, but never touch the UTF-16 scheme files.
+* text=auto
+*.scs -text
