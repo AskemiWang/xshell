@@ -165,11 +165,14 @@ Hex values for every Catppuccin colour live in the
 | Bold text looks washed out | By design: bold maps to the bright slots, which Catppuccin keeps close to the normal ones. Edit the `*(bold)` keys if you want more separation. |
 | TUI apps look 256-colour | Xshell's true-colour mode is off (`TrueColorTerminal=1` in `Xshell.ini`, or the matching session option). |
 | A run of text suddenly gets a cyan background | True-colour is off and the terminal parses `48;2;r;g;b` piecewise — the trailing `46` is read as "cyan background". Same fix as above. |
+| `tput colors` says 8 / bright colours seem missing | The session advertises `TERM=xterm`. Set `TERM=xterm-256color` (session option, or `export TERM=xterm-256color` in your shell profile) so programs actually use the brighter half of the palette. |
 | Only one session should change | Set the scheme in that session's properties instead of the global list. |
 
 ## Compatibility
 
-Tested with **Xshell 8.0.0099** on Windows 11. The `.scs` format is what Xshell 8 ships; some
+Tested with **Xshell 8.0.0099** on Windows 11. All four flavours were pixel-sampled from real
+Xshell windows: every one of the 16 slots rendered exactly the hex value in the file, with no
+colour-management shift. The `.scs` format is what Xshell 8 ships; some
 older builds and most community packs use `.xcs` instead, which is a different layout (the scheme
 name is the section header, plus a `[Names]` block). If your Xshell only accepts `.xcs`, rename
 the section and append the names block:

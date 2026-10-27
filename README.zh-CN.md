@@ -152,11 +152,13 @@ $text = Get-Content -LiteralPath $path -Raw
 | 粗体看起来发灰 | 正常现象：粗体走 bright 槽位，Catppuccin 的 bright 与普通色很接近。想更分明就改 `*(bold)` 键。 |
 | TUI 程序颜色发暗、像 256 色 | Xshell 没开真彩色（`Xshell.ini` 里 `TrueColorTerminal=1`，或会话里的对应选项）。 |
 | 某段文字突然多出青色背景 | 同样是没开真彩色：终端把 `48;2;r;g;b` 拆开解析，尾部的 `46` 被当成「青色背景」。处理方式同上。 |
+| `tput colors` 只显示 8 / 亮色好像没生效 | 会话宣告的是 `TERM=xterm`。改成 `TERM=xterm-256color`（会话选项里设，或在 shell 配置里 `export TERM=xterm-256color`），程序才会用到调色板的后半段。 |
 | 只想改某个会话 | 在那一个会话的属性里选配色方案，不要动全局列表。 |
 
 ## 兼容性
 
-在 Windows 11 + **Xshell 8.0.0099** 上验证。`.scs` 是 Xshell 8 自带的格式；部分旧版本和大多数
+在 Windows 11 + **Xshell 8.0.0099** 上验证。四套方案都从真实的 Xshell 窗口里逐像素采样过：
+16 个槽位全部与文件中的 hex 完全一致，没有色彩管理偏移。`.scs` 是 Xshell 8 自带的格式；部分旧版本和大多数
 社区包用的是 `.xcs`，结构不同（方案名作节标题，另加 `[Names]` 块）。如果你的 Xshell 只认 `.xcs`：
 
 ```ini
