@@ -21,6 +21,8 @@ Catppuccin **没有官方 Xshell 移植**（没有 `catppuccin/xshell` 仓库，
 [netsarang/Xshell-ColorScheme](https://github.com/netsarang/Xshell-ColorScheme) 的 250+ 套方案里也没有），
 本仓库补上这个空缺。
 
+![Catppuccin 四套配色：Latte、Frappé、Macchiato、Mocha](assets/preview.svg)
+
 ## 四套配色
 
 | Flavor | 背景 | 前景 | 适合 |

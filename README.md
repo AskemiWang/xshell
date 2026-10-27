@@ -21,6 +21,8 @@ Catppuccin has **no official Xshell port** (there is no `catppuccin/xshell` repo
 250+ schemes in [netsarang/Xshell-ColorScheme](https://github.com/netsarang/Xshell-ColorScheme)
 do not include it). This repository fills that gap.
 
+![Catppuccin palettes for Xshell: Latte, Frappé, Macchiato and Mocha](assets/preview.svg)
+
 ## Flavours
 
 | Flavour | Background | Foreground | Use it for |
