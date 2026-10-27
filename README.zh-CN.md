@@ -10,7 +10,7 @@
 
 ## 1. 下载
 
-点右上角绿色的 **Code** → **Download ZIP**，解压到哪都行。
+点右上角绿色的 **Code** → **Download ZIP**，或者直接 `git clone`。解压/克隆到哪都行。
 
 ## 2. 导入
 
@@ -24,6 +24,24 @@
 
 只想给某个会话用：右键会话 → `属性 → 外观 → 配色方案`，单独选。
 
+## 4. 想让亮色也生效（可选）
+
+Xshell 跟服务器自我介绍时说的是 `xterm`，而 terminfo 里 `xterm` 等于 8 色。方案照样能画出 16 个
+槽位，但 `ls`、`git`、`vim` 这些程序会照着词条办事，只用前 8 个——亮的那半就闲置了。
+
+在服务器的 `~/.bashrc` 里加三行：
+
+```bash
+case "$TERM" in
+  xterm) export TERM=xterm-256color ;;
+esac
+```
+
+重连后 `tput colors` 应该变成 256。
+
+不改也完全能用，只是亮色那半继续闲着。顺便说一句，9–14 号槽位和 1–6 号本来就是同一个颜色，
+所以实际差别主要落在 `brightBlack` 和 `brightWhite` 这两个槽位上。
+
 ---
 
-颜色看着不对、亮色不亮、或者导入后列表里没有，看 [docs/details.zh-CN.md](docs/details.zh-CN.md)。
+想细看颜色表、排错、兼容性，见 [docs/details.zh-CN.md](docs/details.zh-CN.md)。
