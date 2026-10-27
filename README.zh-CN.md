@@ -152,7 +152,7 @@ $text = Get-Content -LiteralPath $path -Raw
 | 粗体看起来发灰 | 正常现象：粗体走 bright 槽位，Catppuccin 的 bright 与普通色很接近。想更分明就改 `*(bold)` 键。 |
 | TUI 程序颜色发暗、像 256 色 | Xshell 没开真彩色（`Xshell.ini` 里 `TrueColorTerminal=1`，或会话里的对应选项）。 |
 | 某段文字突然多出青色背景 | 同样是没开真彩色：终端把 `48;2;r;g;b` 拆开解析，尾部的 `46` 被当成「青色背景」。处理方式同上。 |
-| `tput colors` 只显示 8 / 亮色好像没生效 | 会话宣告的是 `TERM=xterm`。改成 `TERM=xterm-256color`（会话选项里设，或在 shell 配置里 `export TERM=xterm-256color`），程序才会用到调色板的后半段。 |
+| `tput colors` 只显示 8 / 亮色好像没生效 | 会话宣告的是 `TERM=xterm`。改成 `TERM=xterm-256color`（会话选项里设，或在 shell 配置里 `export TERM=xterm-256color`），程序才会用到调色板的后半段。如果 Xshell 的「终端类型」下拉里没有这一项，就写进 `~/.bashrc`。 |
 | 只想改某个会话 | 在那一个会话的属性里选配色方案，不要动全局列表。 |
 
 ## 兼容性
